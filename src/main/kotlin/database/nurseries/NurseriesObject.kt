@@ -12,13 +12,14 @@ object NurseriesObject : Table("nurseries") {
     val description = varchar("description",45)
     val owner = varchar("owner",45)
 
-    fun insert(sheltersDTO: NurseriesDTO) {
+    fun insert(nurseriesDTO: NurseriesDTO) {
         transaction {
             insert {
-                it[address] = sheltersDTO.address
-                it[name] = sheltersDTO.name
-                it[phone] = sheltersDTO.phone
-                it[description] = sheltersDTO.description
+                it[address] = nurseriesDTO.address
+                it[name] = nurseriesDTO.name
+                it[phone] = nurseriesDTO.phone
+                it[description] = nurseriesDTO.description
+                it[owner] = nurseriesDTO.owner
             }
         }
     }
