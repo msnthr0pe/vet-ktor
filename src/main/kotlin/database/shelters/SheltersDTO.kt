@@ -8,4 +8,5 @@ data class SheltersDTO (
     val name: String,
     val phone: String,
     val description: String,
-)
+    val owner: String,
+    )

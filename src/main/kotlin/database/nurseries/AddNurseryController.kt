@@ -25,6 +25,7 @@ class AddNurseryController(val call: ApplicationCall) {
                         name = addNurseriesObjectReceiveRemote.name,
                         phone = addNurseriesObjectReceiveRemote.phone,
                         description = addNurseriesObjectReceiveRemote.description,
+                        owner = addNurseriesObjectReceiveRemote.owner,
                     )
                 )
             } catch (e: ExposedSQLException) {

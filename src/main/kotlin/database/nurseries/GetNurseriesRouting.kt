@@ -17,6 +17,7 @@ fun Application.configureGetNurseriesRouting() {
                         name = row[NurseriesObject.name],
                         phone = row[NurseriesObject.phone],
                         description = row[NurseriesObject.description],
+                        owner = row[NurseriesObject.owner]
                     )
                 }
             }

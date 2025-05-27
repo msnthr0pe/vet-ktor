@@ -25,6 +25,7 @@ class AddShelterController(val call: ApplicationCall) {
                         name = addSheltersObjectReceiveRemote.name,
                         phone = addSheltersObjectReceiveRemote.phone,
                         description = addSheltersObjectReceiveRemote.description,
+                        owner = addSheltersObjectReceiveRemote.owner,
                     )
                 )
             } catch (e: ExposedSQLException) {

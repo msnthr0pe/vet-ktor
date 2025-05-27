@@ -21,6 +21,7 @@ fun Application.configureUpdateNurseryRouting() {
                     it[name] = updateRequest.name
                     it[phone] = updateRequest.phone
                     it[description] = updateRequest.description
+                    //it[owner] = updateRequest.owner
                 }
             }
 

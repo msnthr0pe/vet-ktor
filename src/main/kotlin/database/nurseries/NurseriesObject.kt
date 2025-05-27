@@ -10,6 +10,7 @@ object NurseriesObject : Table("nurseries") {
     val name = varchar("name",45)
     val phone = varchar("phone", 45)
     val description = varchar("description",45)
+    val owner = varchar("owner",45)
 
     fun insert(sheltersDTO: NurseriesDTO) {
         transaction {
@@ -33,6 +34,7 @@ object NurseriesObject : Table("nurseries") {
                             name = row[name],
                             phone = row[phone],
                             description = row[description],
+                            owner = row[owner],
                         )
                     }
             }

@@ -10,17 +10,18 @@ import org.jetbrains.exposed.sql.transactions.transaction
 fun Application.configureGetSheltersRouting() {
     routing {
         get("/getshelters") {
-            val news = transaction {
+            val shelters = transaction {
                 SheltersObject.selectAll().map { row ->
                     SheltersDTO(
                         address = row[SheltersObject.address],
                         name = row[SheltersObject.name],
                         phone = row[SheltersObject.phone],
                         description = row[SheltersObject.description],
+                        owner = row[SheltersObject.owner],
                     )
                 }
             }
-            call.respond(news)
+            call.respond(shelters)
         }
     }
 }

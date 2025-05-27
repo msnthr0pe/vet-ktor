@@ -11,6 +11,7 @@ object SheltersObject : Table("shelters") {
     val name = varchar("name",45)
     val phone = varchar("phone", 45)
     val description = varchar("description",45)
+    val owner = varchar("owner",45)
 
     fun insert(sheltersDTO: SheltersDTO) {
         transaction {
@@ -19,6 +20,7 @@ object SheltersObject : Table("shelters") {
                 it[name] = sheltersDTO.name
                 it[phone] = sheltersDTO.phone
                 it[description] = sheltersDTO.description
+                it[owner] = sheltersDTO.owner
             }
         }
     }
@@ -34,6 +36,7 @@ object SheltersObject : Table("shelters") {
                             name = row[name],
                             phone = row[phone],
                             description = row[description],
+                            owner = row[owner]
                         )
                     }
             }
