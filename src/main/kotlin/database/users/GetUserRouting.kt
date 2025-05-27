@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 fun Application.configureGetUserRouting() {
     routing {
         post("/getuser") {
-            val request = call.receive<TextDTO>()
+            val request = call.receive<EmailDTO>()
             val email = request.email
             try {
                 val result: UserDTO? = transaction {

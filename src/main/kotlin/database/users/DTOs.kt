@@ -13,7 +13,10 @@ class UserDTO (
 )
 
 @Serializable
-data class TextDTO(val email: String)
+data class EmailDTO(val email: String)
+
+@Serializable
+data class InfoDTO(val info: String)
 
 @Serializable
 data class PasswordDTO(

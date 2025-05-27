@@ -20,9 +20,9 @@ fun Application.configureUpdateUserRouting() {
             }
 
             if (rowsUpdated > 0) {
-                call.respond(TextDTO("Пароль изменён"))
+                call.respond(EmailDTO("Пароль изменён"))
             } else {
-                call.respond(TextDTO("Пользователь не найден"))
+                call.respond(EmailDTO("Пользователь не найден"))
             }
         }
     }

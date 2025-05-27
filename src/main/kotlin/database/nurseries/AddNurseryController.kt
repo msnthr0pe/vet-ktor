@@ -1,4 +1,4 @@
-package com.database.shelters
+package com.database.nurseries
 
 import com.database.tokens.TokenDTO
 import com.database.tokens.Tokens
@@ -10,21 +10,21 @@ import io.ktor.server.response.respond
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import java.util.UUID
 
-class AddShelterController(val call: ApplicationCall) {
-    suspend fun addShelter() {
-        val addSheltersObjectReceiveRemote = call.receive<SheltersDTO>()
-        val sheltersDTO = SheltersObject.fetchShelter(addSheltersObjectReceiveRemote.address)
-        if (sheltersDTO != null) {
-            call.respond(HttpStatusCode.Conflict, "Shelter already exists")
+class AddNurseryController(val call: ApplicationCall) {
+    suspend fun addNursery() {
+        val addNurseriesObjectReceiveRemote = call.receive<NurseriesDTO>()
+        val nurseriesDTO = NurseriesObject.fetchNursery(addNurseriesObjectReceiveRemote.address)
+        if (nurseriesDTO != null) {
+            call.respond(HttpStatusCode.Conflict, "Nursery already exists")
         } else {
             val token = UUID.randomUUID().toString()
             try {
-                SheltersObject.insert(
-                    SheltersDTO(
-                        address = addSheltersObjectReceiveRemote.address,
-                        name = addSheltersObjectReceiveRemote.name,
-                        phone = addSheltersObjectReceiveRemote.phone,
-                        description = addSheltersObjectReceiveRemote.description,
+                NurseriesObject.insert(
+                    NurseriesDTO(
+                        address = addNurseriesObjectReceiveRemote.address,
+                        name = addNurseriesObjectReceiveRemote.name,
+                        phone = addNurseriesObjectReceiveRemote.phone,
+                        description = addNurseriesObjectReceiveRemote.description,
                     )
                 )
             } catch (e: ExposedSQLException) {
@@ -37,7 +37,7 @@ class AddShelterController(val call: ApplicationCall) {
             Tokens.insert(
                 TokenDTO(
                     rowId = UUID.randomUUID().toString(),
-                    login = addSheltersObjectReceiveRemote.address,
+                    login = addNurseriesObjectReceiveRemote.address,
                     token = token
                 )
             )
