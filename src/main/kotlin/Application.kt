@@ -1,5 +1,13 @@
 package com
 
+import com.database.animals.configureAddAnimalRouting
+import com.database.animals.configureDeleteAnimalRouting
+import com.database.animals.configureGetAnimalFullRouting
+import com.database.animals.configureGetAnimalRouting
+import com.database.animals.configureGetAnimalsByNurseryRouting
+import com.database.animals.configureGetAnimalsByShelterRouting
+import com.database.animals.configureGetAnimalsRouting
+import com.database.animals.configureUpdateAnimalRouting
 import com.database.clubs.configureAddClubRouting
 import com.database.clubs.configureDeleteClubRouting
 import com.database.clubs.configureGetClubByOwnerRouting
@@ -56,6 +64,15 @@ fun Application.module() {
     configureGetClubByOwnerRouting()
     configureUpdateClubRouting()
     configureDeleteClubRouting()
+
+    configureAddAnimalRouting()
+    configureGetAnimalsRouting()
+    configureGetAnimalsByShelterRouting()
+    configureGetAnimalsByNurseryRouting()
+    configureGetAnimalRouting()
+    configureGetAnimalFullRouting()
+    configureUpdateAnimalRouting()
+    configureDeleteAnimalRouting()
 
     configureRegisterRouting()
     configureLoginRouting()
