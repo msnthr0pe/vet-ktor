@@ -1,51 +1,56 @@
-package com.database.nurseries
+package com.database.clubs
 
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
-object NurseriesObject : Table("nurseries") {
+object ClubsObject : Table("clubs") {
     val address = varchar("address", 45)
     val name = varchar("name", 45)
     val phone = varchar("phone", 45)
-    val description = varchar("description", 45)
+    val description = varchar("description", 500)
     val owner = varchar("owner", 45)
-    val clubAddress = varchar("club_address", 45).nullable()
 
-    fun insert(nurseriesDTO: NurseriesDTO) {
+    fun insert(clubsDTO: ClubsDTO) {
         transaction {
             insert {
-                it[address] = nurseriesDTO.address
-                it[name] = nurseriesDTO.name
-                it[phone] = nurseriesDTO.phone
-                it[description] = nurseriesDTO.description
-                it[owner] = nurseriesDTO.owner
-                it[clubAddress] = nurseriesDTO.clubAddress
+                it[address] = clubsDTO.address
+                it[name] = clubsDTO.name
+                it[phone] = clubsDTO.phone
+                it[description] = clubsDTO.description
+                it[owner] = clubsDTO.owner
             }
         }
     }
 
-    fun fetchNursery(address: String): NurseriesDTO? {
+    fun fetchClub(address: String): ClubsDTO? {
         return try {
             transaction {
-                NurseriesObject
-                    .select { NurseriesObject.address eq address }
+                ClubsObject
+                    .select { ClubsObject.address eq address }
                     .singleOrNull()
                     ?.let { row ->
-                        NurseriesDTO(
-                            address = row[NurseriesObject.address],
+                        ClubsDTO(
+                            address = row[ClubsObject.address],
                             name = row[name],
                             phone = row[phone],
                             description = row[description],
                             owner = row[owner],
-                            clubAddress = row[clubAddress],
                         )
                     }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    fun deleteClub(address: String): Int {
+        return transaction {
+            ClubsObject.deleteWhere { ClubsObject.address eq address }
         }
     }
 }

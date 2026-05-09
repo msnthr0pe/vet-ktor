@@ -1,4 +1,4 @@
-package com.database.shelters
+package com.database.clubs
 
 import com.database.users.InfoDTO
 import io.ktor.server.application.Application
@@ -9,17 +9,16 @@ import io.ktor.server.routing.routing
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
-fun Application.configureUpdateShelterRouting() {
+fun Application.configureUpdateClubRouting() {
     routing {
-        post("/updateshelter") {
-            val updateRequest = call.receive<SheltersDTO>()
+        post("/updateclub") {
+            val updateRequest = call.receive<ClubsDTO>()
 
             val rowsUpdated = transaction {
-                SheltersObject.update({ SheltersObject.address eq updateRequest.address }) {
+                ClubsObject.update({ ClubsObject.address eq updateRequest.address }) {
                     it[name] = updateRequest.name
                     it[phone] = updateRequest.phone
                     it[description] = updateRequest.description
-                    it[clubAddress] = updateRequest.clubAddress
                 }
             }
 

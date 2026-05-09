@@ -18,6 +18,7 @@ fun Application.configureGetSheltersRouting() {
                         phone = row[SheltersObject.phone],
                         description = row[SheltersObject.description],
                         owner = row[SheltersObject.owner],
+                        clubAddress = row[SheltersObject.clubAddress],
                     )
                 }
             }

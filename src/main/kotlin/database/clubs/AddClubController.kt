@@ -1,4 +1,4 @@
-package com.database.shelters
+package com.database.clubs
 
 import com.database.tokens.TokenDTO
 import com.database.tokens.Tokens
@@ -10,24 +10,23 @@ import io.ktor.server.response.respond
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import java.util.UUID
 
-class AddShelterController(val call: ApplicationCall) {
-    suspend fun addShelter() {
-        val request = call.receive<SheltersDTO>()
-        val existing = SheltersObject.fetchShelter(request.address)
+class AddClubController(val call: ApplicationCall) {
+    suspend fun addClub() {
+        val request = call.receive<ClubsDTO>()
+        val existing = ClubsObject.fetchClub(request.address)
         if (existing != null) {
-            call.respond(HttpStatusCode.Conflict, "Shelter already exists")
+            call.respond(HttpStatusCode.Conflict, "Club already exists")
             return
         }
         val token = UUID.randomUUID().toString()
         try {
-            SheltersObject.insert(
-                SheltersDTO(
+            ClubsObject.insert(
+                ClubsDTO(
                     address = request.address,
                     name = request.name,
                     phone = request.phone,
                     description = request.description,
                     owner = request.owner,
-                    clubAddress = request.clubAddress,
                 )
             )
         } catch (e: ExposedSQLException) {

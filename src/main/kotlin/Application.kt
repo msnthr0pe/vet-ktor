@@ -1,8 +1,10 @@
 package com
 
-import com.database.addClient.configureAddClientRouting
-import com.database.getClient.configureGetClientByNameRouting
-import com.database.getClient.configureGetClientRouting
+import com.database.clubs.configureAddClubRouting
+import com.database.clubs.configureDeleteClubRouting
+import com.database.clubs.configureGetClubByOwnerRouting
+import com.database.clubs.configureGetClubsRouting
+import com.database.clubs.configureUpdateClubRouting
 import com.database.news.configureAddNewsRouting
 import com.database.news.configureGetNewsRouting
 import com.database.nurseries.configureAddNurseryRouting
@@ -49,16 +51,16 @@ fun Application.module() {
     configureGetShelterByOwnerRouting()
     configureGetNurseryByOwnerRouting()
 
+    configureAddClubRouting()
+    configureGetClubsRouting()
+    configureGetClubByOwnerRouting()
+    configureUpdateClubRouting()
+    configureDeleteClubRouting()
+
     configureRegisterRouting()
     configureLoginRouting()
 
-    configureAddClientRouting()
-    configureGetClientRouting()
-
-    configureGetClientByNameRouting()
-
     configureGetUserRouting()
-
     configureUpdateUserRouting()
 
     configureSerialization()

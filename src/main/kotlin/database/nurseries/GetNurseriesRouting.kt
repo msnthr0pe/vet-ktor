@@ -10,18 +10,19 @@ import org.jetbrains.exposed.sql.transactions.transaction
 fun Application.configureGetNurseriesRouting() {
     routing {
         get("/getnurseries") {
-            val news = transaction {
+            val nurseries = transaction {
                 NurseriesObject.selectAll().map { row ->
                     NurseriesDTO(
                         address = row[NurseriesObject.address],
                         name = row[NurseriesObject.name],
                         phone = row[NurseriesObject.phone],
                         description = row[NurseriesObject.description],
-                        owner = row[NurseriesObject.owner]
+                        owner = row[NurseriesObject.owner],
+                        clubAddress = row[NurseriesObject.clubAddress],
                     )
                 }
             }
-            call.respond(news)
+            call.respond(nurseries)
         }
     }
 }

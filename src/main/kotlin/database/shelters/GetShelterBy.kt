@@ -14,7 +14,7 @@ fun Application.configureGetShelterByOwnerRouting() {
         post("/getshelterby") {
             val input = call.receive<InfoDTO>()
             val shelters = transaction {
-                SheltersObject.select() { SheltersObject.owner eq input.info }
+                SheltersObject.select { SheltersObject.owner eq input.info }
                     .map {
                         SheltersDTO(
                             address = it[SheltersObject.address],
@@ -22,6 +22,7 @@ fun Application.configureGetShelterByOwnerRouting() {
                             phone = it[SheltersObject.phone],
                             description = it[SheltersObject.description],
                             owner = it[SheltersObject.owner],
+                            clubAddress = it[SheltersObject.clubAddress],
                         )
                     }
             }

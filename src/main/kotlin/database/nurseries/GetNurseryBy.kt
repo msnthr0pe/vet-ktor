@@ -14,7 +14,7 @@ fun Application.configureGetNurseryByOwnerRouting() {
         post("/getnurseryby") {
             val input = call.receive<InfoDTO>()
             val nurseries = transaction {
-                NurseriesObject.select() { NurseriesObject.owner eq input.info }
+                NurseriesObject.select { NurseriesObject.owner eq input.info }
                     .map {
                         NurseriesDTO(
                             address = it[NurseriesObject.address],
@@ -22,6 +22,7 @@ fun Application.configureGetNurseryByOwnerRouting() {
                             phone = it[NurseriesObject.phone],
                             description = it[NurseriesObject.description],
                             owner = it[NurseriesObject.owner],
+                            clubAddress = it[NurseriesObject.clubAddress],
                         )
                     }
             }

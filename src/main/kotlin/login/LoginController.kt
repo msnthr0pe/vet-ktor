@@ -33,5 +33,4 @@ class LoginController (private val call: ApplicationCall) {
             }
         }
     }
-
 }

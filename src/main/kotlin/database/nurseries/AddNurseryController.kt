@@ -12,37 +12,40 @@ import java.util.UUID
 
 class AddNurseryController(val call: ApplicationCall) {
     suspend fun addNursery() {
-        val addNurseriesObjectReceiveRemote = call.receive<NurseriesDTO>()
-        val nurseriesDTO = NurseriesObject.fetchNursery(addNurseriesObjectReceiveRemote.address)
-        if (nurseriesDTO != null) {
+        val request = call.receive<NurseriesDTO>()
+        val existing = NurseriesObject.fetchNursery(request.address)
+        if (existing != null) {
             call.respond(HttpStatusCode.Conflict, "Nursery already exists")
-        } else {
-            val token = UUID.randomUUID().toString()
-            try {
-                NurseriesObject.insert(
-                    NurseriesDTO(
-                        address = addNurseriesObjectReceiveRemote.address,
-                        name = addNurseriesObjectReceiveRemote.name,
-                        phone = addNurseriesObjectReceiveRemote.phone,
-                        description = addNurseriesObjectReceiveRemote.description,
-                        owner = addNurseriesObjectReceiveRemote.owner,
-                    )
-                )
-            } catch (e: ExposedSQLException) {
-                e.printStackTrace()
-                call.respond(HttpStatusCode.Conflict, "SQL error: ${e.localizedMessage}")
-            } catch (e: Exception) {
-                e.printStackTrace()
-                call.respond(HttpStatusCode.InternalServerError, "Unexpected error: ${e.localizedMessage}")
-            }
-            Tokens.insert(
-                TokenDTO(
-                    rowId = UUID.randomUUID().toString(),
-                    login = addNurseriesObjectReceiveRemote.address,
-                    token = token
+            return
+        }
+        val token = UUID.randomUUID().toString()
+        try {
+            NurseriesObject.insert(
+                NurseriesDTO(
+                    address = request.address,
+                    name = request.name,
+                    phone = request.phone,
+                    description = request.description,
+                    owner = request.owner,
+                    clubAddress = request.clubAddress,
                 )
             )
-            call.respond(RegisterResponseRemote(token = token))
+        } catch (e: ExposedSQLException) {
+            e.printStackTrace()
+            call.respond(HttpStatusCode.Conflict, "SQL error: ${e.localizedMessage}")
+            return
+        } catch (e: Exception) {
+            e.printStackTrace()
+            call.respond(HttpStatusCode.InternalServerError, "Unexpected error: ${e.localizedMessage}")
+            return
         }
+        Tokens.insert(
+            TokenDTO(
+                rowId = UUID.randomUUID().toString(),
+                login = request.address,
+                token = token
+            )
+        )
+        call.respond(RegisterResponseRemote(token = token))
     }
 }

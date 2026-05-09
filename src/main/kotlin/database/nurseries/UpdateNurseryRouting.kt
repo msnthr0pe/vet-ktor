@@ -1,6 +1,5 @@
 package com.database.nurseries
 
-import com.database.users.EmailDTO
 import com.database.users.InfoDTO
 import io.ktor.server.application.Application
 import io.ktor.server.request.receive
@@ -16,12 +15,11 @@ fun Application.configureUpdateNurseryRouting() {
             val updateRequest = call.receive<NurseriesDTO>()
 
             val rowsUpdated = transaction {
-                NurseriesObject.update({ NurseriesObject.address eq
-                        updateRequest.address }) {
+                NurseriesObject.update({ NurseriesObject.address eq updateRequest.address }) {
                     it[name] = updateRequest.name
                     it[phone] = updateRequest.phone
                     it[description] = updateRequest.description
-                    //it[owner] = updateRequest.owner
+                    it[clubAddress] = updateRequest.clubAddress
                 }
             }
 
