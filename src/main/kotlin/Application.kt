@@ -8,6 +8,7 @@ import com.database.animals.configureGetAnimalsByNurseryRouting
 import com.database.animals.configureGetAnimalsByShelterRouting
 import com.database.animals.configureGetAnimalsRouting
 import com.database.animals.configureUpdateAnimalRouting
+import com.database.animals.configureSurveyRouting
 import com.database.clubs.configureAddClubRouting
 import com.database.clubs.configureDeleteClubRouting
 import com.database.clubs.configureGetClubByOwnerRouting
@@ -73,6 +74,7 @@ fun Application.module() {
     configureGetAnimalFullRouting()
     configureUpdateAnimalRouting()
     configureDeleteAnimalRouting()
+    configureSurveyRouting()
 
     configureRegisterRouting()
     configureLoginRouting()
