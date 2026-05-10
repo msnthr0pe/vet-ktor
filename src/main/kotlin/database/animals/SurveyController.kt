@@ -8,6 +8,16 @@ import io.ktor.server.response.respond
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
+private val speciesSynonyms = listOf(
+    setOf("кошка", "кот"),
+    setOf("пёс", "собака", "пес"),
+)
+
+private fun normalizeSpecies(species: String): String {
+    val lower = species.lowercase()
+    return speciesSynonyms.firstOrNull { lower in it }?.first() ?: lower
+}
+
 class SurveyController(val call: ApplicationCall) {
 
     suspend fun survey() {
@@ -33,7 +43,7 @@ class SurveyController(val call: ApplicationCall) {
 
         val result = animals
             .map { animal ->
-                val speciesScore = if (animal.species.lowercase() == request.species.lowercase()) speciesWeight else 0
+                val speciesScore = if (normalizeSpecies(animal.species) == normalizeSpecies(request.species)) speciesWeight else 0
                 val breedScore   = if (animal.breed.lowercase()   == request.breed.lowercase())   breedWeight   else 0
                 val healthScore  = when {
                     request.willingToAdoptSick  -> healthWeight               // больное животное принимается — штрафа нет
