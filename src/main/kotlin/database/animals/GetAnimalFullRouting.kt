@@ -24,6 +24,7 @@ fun Application.configureGetAnimalFullRouting() {
             val full = transaction {
                 FullAnimalDTO(
                     id = animal.id,
+                    nickname = animal.nickname,
                     species = animal.species,
                     breed = animal.breed,
                     age = animal.age,

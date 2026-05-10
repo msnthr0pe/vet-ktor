@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AnimalDTO(
     val id: String,
+    val nickname: String,
     val species: String,
     val breed: String,
     val age: Int,

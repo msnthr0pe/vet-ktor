@@ -27,6 +27,7 @@ fun Application.configureUpdateAnimalRouting() {
 
             val rowsUpdated = transaction {
                 AnimalsObject.update({ AnimalsObject.id eq request.id }) {
+                    it[nickname] = request.nickname
                     it[species] = request.species
                     it[breed] = request.breed
                     it[age] = request.age

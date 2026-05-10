@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object AnimalsObject : Table("animals") {
     val id = varchar("id", 45)
+    val nickname = varchar("nickname", 45)
     val species = varchar("species", 45)
     val breed = varchar("breed", 45)
     val age = integer("age")
@@ -20,6 +21,7 @@ object AnimalsObject : Table("animals") {
         transaction {
             insert {
                 it[id] = animalDTO.id
+                it[nickname] = animalDTO.nickname
                 it[species] = animalDTO.species
                 it[breed] = animalDTO.breed
                 it[age] = animalDTO.age
@@ -52,6 +54,7 @@ object AnimalsObject : Table("animals") {
 
     fun org.jetbrains.exposed.sql.ResultRow.toDTO() = AnimalDTO(
         id = this[id],
+        nickname = this[nickname],
         species = this[species],
         breed = this[breed],
         age = this[age],
