@@ -33,8 +33,8 @@ class SurveyController(val call: ApplicationCall) {
 
         val result = animals
             .map { animal ->
-                val speciesScore = if (animal.species == request.species) speciesWeight else 0
-                val breedScore   = if (animal.breed   == request.breed)   breedWeight   else 0
+                val speciesScore = if (animal.species.lowercase() == request.species.lowercase()) speciesWeight else 0
+                val breedScore   = if (animal.breed.lowercase()   == request.breed.lowercase())   breedWeight   else 0
                 val healthScore  = when {
                     request.willingToAdoptSick  -> healthWeight               // больное животное принимается — штрафа нет
                     animal.diseases == null     -> healthWeight               // здоровое, пользователь хочет здоровое
