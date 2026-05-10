@@ -18,9 +18,11 @@ import com.database.news.configureAddNewsRouting
 import com.database.news.configureGetNewsRouting
 import com.database.nurseries.configureAddNurseryRouting
 import com.database.nurseries.configureGetNurseriesRouting
+import com.database.nurseries.configureGetNurseryByAddressRouting
 import com.database.nurseries.configureGetNurseryByOwnerRouting
 import com.database.nurseries.configureUpdateNurseryRouting
 import com.database.shelters.configureAddShelterRouting
+import com.database.shelters.configureGetShelterByAddressRouting
 import com.database.shelters.configureGetShelterByOwnerRouting
 import com.database.shelters.configureGetSheltersRouting
 import com.database.shelters.configureUpdateShelterRouting
@@ -58,7 +60,9 @@ fun Application.module() {
     configureUpdateNurseryRouting()
 
     configureGetShelterByOwnerRouting()
+    configureGetShelterByAddressRouting()
     configureGetNurseryByOwnerRouting()
+    configureGetNurseryByAddressRouting()
 
     configureAddClubRouting()
     configureGetClubsRouting()
