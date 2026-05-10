@@ -32,6 +32,7 @@ fun Application.configureUpdateAnimalRouting() {
                     it[breed] = request.breed
                     it[age] = request.age
                     it[diseases] = request.diseases
+                    it[imageUrl] = request.imageUrl
                     it[shelterAddress] = request.shelterAddress
                     it[nurseryAddress] = request.nurseryAddress
                 }

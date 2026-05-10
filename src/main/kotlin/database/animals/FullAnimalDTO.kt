@@ -12,6 +12,7 @@ data class FullAnimalDTO(
     val breed: String,
     val age: Int,
     val diseases: String? = null,
+    val imageUrl: String? = null,
     val shelter: SheltersDTO? = null,
     val nursery: NurseriesDTO? = null,
 )

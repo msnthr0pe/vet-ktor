@@ -14,6 +14,7 @@ object AnimalsObject : Table("animals") {
     val breed = varchar("breed", 45)
     val age = integer("age")
     val diseases = varchar("diseases", 255).nullable()
+    val imageUrl = varchar("image_url", 500).nullable()
     val shelterAddress = varchar("shelter_address", 45).nullable()
     val nurseryAddress = varchar("nursery_address", 45).nullable()
 
@@ -26,6 +27,7 @@ object AnimalsObject : Table("animals") {
                 it[breed] = animalDTO.breed
                 it[age] = animalDTO.age
                 it[diseases] = animalDTO.diseases
+                it[imageUrl] = animalDTO.imageUrl
                 it[shelterAddress] = animalDTO.shelterAddress
                 it[nurseryAddress] = animalDTO.nurseryAddress
             }
@@ -59,6 +61,7 @@ object AnimalsObject : Table("animals") {
         breed = this[breed],
         age = this[age],
         diseases = this[diseases],
+        imageUrl = this[imageUrl],
         shelterAddress = this[shelterAddress],
         nurseryAddress = this[nurseryAddress],
     )
