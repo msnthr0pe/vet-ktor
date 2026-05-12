@@ -1,7 +1,9 @@
 package com.database.nurseries
 
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -12,6 +14,7 @@ object NurseriesObject : Table("nurseries") {
     val description = varchar("description", 45)
     val owner = varchar("owner", 45)
     val clubAddress = varchar("club_address", 45).nullable()
+    val createdAt = datetime("created_at")
 
     fun insert(nurseriesDTO: NurseriesDTO) {
         transaction {

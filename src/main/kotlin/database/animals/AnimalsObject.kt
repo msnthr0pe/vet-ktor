@@ -1,9 +1,11 @@
 package com.database.animals
 
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -17,6 +19,7 @@ object AnimalsObject : Table("animals") {
     val imageUrl = varchar("image_url", 500).nullable()
     val shelterAddress = varchar("shelter_address", 45).nullable()
     val nurseryAddress = varchar("nursery_address", 45).nullable()
+    val createdAt = datetime("created_at")
 
     fun insert(animalDTO: AnimalDTO) {
         transaction {

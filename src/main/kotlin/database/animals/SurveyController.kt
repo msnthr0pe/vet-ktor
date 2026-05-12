@@ -5,6 +5,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -38,7 +39,7 @@ class SurveyController(val call: ApplicationCall) {
         val maxScore = speciesWeight + breedWeight + healthWeight // всегда 5
 
         val animals = transaction {
-            AnimalsObject.selectAll().map { it.toDTO() }
+            AnimalsObject.selectAll().orderBy(AnimalsObject.createdAt, SortOrder.DESC).map { it.toDTO() }
         }
 
         val result = animals

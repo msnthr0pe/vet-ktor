@@ -4,6 +4,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -11,7 +12,7 @@ fun Application.configureGetNurseriesRouting() {
     routing {
         get("/getnurseries") {
             val nurseries = transaction {
-                NurseriesObject.selectAll().map { row ->
+                NurseriesObject.selectAll().orderBy(NurseriesObject.createdAt, SortOrder.DESC).map { row ->
                     NurseriesDTO(
                         address = row[NurseriesObject.address],
                         name = row[NurseriesObject.name],

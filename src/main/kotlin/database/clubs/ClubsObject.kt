@@ -1,9 +1,11 @@
 package com.database.clubs
 
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -13,6 +15,7 @@ object ClubsObject : Table("clubs") {
     val phone = varchar("phone", 45)
     val description = varchar("description", 500)
     val owner = varchar("owner", 45)
+    val createdAt = datetime("created_at")
 
     fun insert(clubsDTO: ClubsDTO) {
         transaction {

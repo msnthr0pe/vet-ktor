@@ -6,6 +6,7 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -14,7 +15,7 @@ fun Application.configureGetNurseryByOwnerRouting() {
         post("/getnurseryby") {
             val input = call.receive<InfoDTO>()
             val nurseries = transaction {
-                NurseriesObject.select { NurseriesObject.owner eq input.info }
+                NurseriesObject.select { NurseriesObject.owner eq input.info }.orderBy(NurseriesObject.createdAt, SortOrder.DESC)
                     .map {
                         NurseriesDTO(
                             address = it[NurseriesObject.address],
