@@ -25,8 +25,8 @@ class SurveyController(val call: ApplicationCall) {
         val request = call.receive<SurveyRequestDTO>()
 
         val (breedWeight, healthWeight) = when (request.mostImportant) {
-            "breed"  -> Pair(3, 1)
-            "health" -> Pair(1, 3)
+            "breed"  -> Pair(0.75, 0.25)
+            "health" -> Pair(0.25, 0.75)
             else -> {
                 call.respond(
                     HttpStatusCode.BadRequest,
@@ -35,7 +35,6 @@ class SurveyController(val call: ApplicationCall) {
                 return
             }
         }
-        val maxScore = (breedWeight + healthWeight).toDouble() // всегда 4.0
 
         // Жёсткий фильтр по виду
         val normalizedRequestSpecies = normalizeSpecies(request.species)
@@ -55,7 +54,7 @@ class SurveyController(val call: ApplicationCall) {
                 val healthScore = calcHealthScore(animal.diseaseSeverity, request.willingToAdoptSick, healthWeight)
                 AnimalMatchDTO(
                     animal      = animal,
-                    coefficient = (breedScore + healthScore) / maxScore
+                    coefficient = breedScore + healthScore
                 )
             }
             .sortedByDescending { it.coefficient }
@@ -71,10 +70,10 @@ class SurveyController(val call: ApplicationCall) {
         animal: AnimalDTO,
         requestedBreed: String,
         requestedGroupId: Int?,
-        breedWeight: Int
+        breedWeight: Double
     ): Double {
         if (animal.breed.lowercase() == requestedBreed.lowercase()) {
-            return breedWeight.toDouble()
+            return breedWeight
         }
         val animalGroupId = BreedGroupsObject.findGroupId(animal.breed, animal.species)
         return if (requestedGroupId != null && animalGroupId != null && requestedGroupId == animalGroupId)
@@ -95,10 +94,10 @@ class SurveyController(val call: ApplicationCall) {
     private fun calcHealthScore(
         severity: Int,
         willingToAdoptSick: Boolean,
-        healthWeight: Int
+        healthWeight: Double
     ): Double {
         if (!willingToAdoptSick) {
-            return if (severity == 0) healthWeight.toDouble() else 0.0
+            return if (severity == 0) healthWeight else 0.0
         }
         return when (severity) {
             0    -> healthWeight * 1.0
