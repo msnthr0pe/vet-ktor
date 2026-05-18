@@ -28,7 +28,8 @@ fun Application.configureGetAnimalFullRouting() {
                     species = animal.species,
                     breed = animal.breed,
                     age = animal.age,
-                    diseases = animal.diseases,
+                    diseases        = animal.diseases,
+                    diseaseSeverity = animal.diseaseSeverity,
                     imageUrl = animal.imageUrl,
                     shelter = animal.shelterAddress?.let { addr ->
                         SheltersObject.fetchShelter(addr)
