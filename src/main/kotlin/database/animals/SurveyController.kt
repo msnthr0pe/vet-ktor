@@ -24,13 +24,14 @@ class SurveyController(val call: ApplicationCall) {
     suspend fun survey() {
         val request = call.receive<SurveyRequestDTO>()
 
-        val (breedWeight, healthWeight) = when (request.mostImportant) {
-            "breed"  -> Pair(0.75, 0.25)
-            "health" -> Pair(0.25, 0.75)
+        val (breedWeight, healthWeight, ageWeight) = when (request.mostImportant) {
+            "breed"  -> Triple(0.6, 0.2, 0.2)
+            "health" -> Triple(0.2, 0.6, 0.2)
+            "age"    -> Triple(0.2, 0.2, 0.6)
             else -> {
                 call.respond(
                     HttpStatusCode.BadRequest,
-                    "mostImportant должен быть одним из: breed, health"
+                    "mostImportant должен быть одним из: breed, health, age"
                 )
                 return
             }
@@ -52,9 +53,10 @@ class SurveyController(val call: ApplicationCall) {
             .map { animal ->
                 val breedScore  = calcBreedScore(animal, request.breed, requestedGroupId, breedWeight)
                 val healthScore = calcHealthScore(animal.diseaseSeverity, request.willingToAdoptSick, healthWeight)
+                val ageScore    = calcAgeScore(animal.age, request.age, ageWeight)
                 AnimalMatchDTO(
                     animal      = animal,
-                    coefficient = breedScore + healthScore
+                    coefficient = breedScore + healthScore + ageScore
                 )
             }
             .sortedByDescending { it.coefficient }
@@ -80,6 +82,14 @@ class SurveyController(val call: ApplicationCall) {
             breedWeight * 0.8
         else
             breedWeight * 0.1
+    }
+
+    // ── Возраст ──────────────────────────────────────────────────────────────
+    // A = max(0, 1 - 0.2 × |age_a - age_r|)
+    // Каждый год разницы снижает score на 0.2; при разнице ≥ 5 лет → 0
+    private fun calcAgeScore(animalAge: Int, requestedAge: Int, ageWeight: Double): Double {
+        val diff = Math.abs(animalAge - requestedAge)
+        return ageWeight * maxOf(0.0, 1.0 - 0.2 * diff)
     }
 
     // ── Здоровье ─────────────────────────────────────────────────────────────

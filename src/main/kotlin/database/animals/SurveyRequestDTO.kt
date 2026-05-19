@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 data class SurveyRequestDTO(
     val species: String,
     val breed: String,
+    val age: Int,
     val willingToAdoptSick: Boolean,
-    // допустимые значения: "species", "breed", "health"
+    // допустимые значения: "breed", "health", "age"
     val mostImportant: String,
 )
